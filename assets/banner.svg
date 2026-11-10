@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="380" viewBox="0 0 1280 380" role="img" aria-labelledby="title desc">
+  <title id="title">Shadow Fight 2 — Money / Bonus</title>
+  <desc id="desc">Тёмная обложка с красным солнцем и силуэтом бойца. Редактирование сохранений iOS без джейлбрейка.</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#15191f"/><stop offset="1" stop-color="#080a0e"/></linearGradient>
+    <linearGradient id="sun" x2="0" y2="1"><stop stop-color="#c73f35"/><stop offset="1" stop-color="#60292c"/></linearGradient>
+    <pattern id="lines" width="8" height="8" patternUnits="userSpaceOnUse"><path d="M0 8L8 0" stroke="#fff" stroke-opacity=".018"/></pattern>
+    <clipPath id="round"><rect width="1280" height="380" rx="18"/></clipPath>
+  </defs>
+  <g clip-path="url(#round)">
+    <rect width="1280" height="380" fill="url(#bg)"/><rect width="1280" height="380" fill="url(#lines)"/>
+    <circle cx="1034" cy="170" r="157" fill="url(#sun)"/>
+    <path d="M814 245L1265 216M835 268L1260 240M858 292L1240 266" stroke="#0b0e13" stroke-width="8" opacity=".4"/>
+    <path d="M795 347L890 293L965 324L1068 278L1160 310L1280 265V380H795Z" fill="#090b0e"/>
+    <g fill="#090b0e" stroke="#090b0e" stroke-linejoin="round" stroke-linecap="round">
+      <circle cx="1040" cy="93" r="18"/>
+      <path d="M1027 112L1052 110L1069 170L1047 202L1008 181Z" stroke-width="8"/>
+      <path d="M1025 129L991 153L944 137M1052 128L1086 142L1128 113" fill="none" stroke-width="17"/>
+      <path d="M1030 185L1008 236L966 287M1050 188L1078 235L1122 276" fill="none" stroke-width="23"/>
+      <path d="M964 286L944 292M1121 276L1145 280" stroke-width="13"/>
+      <path d="M1118 124L1195 37" fill="none" stroke="#d8b777" stroke-width="5"/>
+      <path d="M1112 113L1132 131" stroke="#d8b777" stroke-width="4"/>
+      <path d="M1026 78L1050 78L1079 86L1054 88Z"/>
+    </g>
+    <path d="M60 61H112" stroke="#c84b3b" stroke-width="4"/>
+    <text x="60" y="100" fill="#d7b67b" font-family="Segoe UI,Arial,sans-serif" font-size="18" letter-spacing="5">SHADOW FIGHT 2</text>
+    <text x="56" y="174" fill="#f4f0e9" font-family="Segoe UI,Arial,sans-serif" font-size="66" font-weight="800" letter-spacing="-2">MONEY / BONUS</text>
+    <text x="60" y="218" fill="#c5c7cb" font-family="Segoe UI,Arial,sans-serif" font-size="23">Свой прогресс. Проверенный хеш. Новый баланс.</text>
+    <rect x="60" y="254" width="218" height="34" rx="5" fill="#242831"/>
+    <text x="78" y="277" fill="#e2c998" font-family="Segoe UI,Arial,sans-serif" font-size="14" font-weight="600">iOS · БЕЗ ДЖЕЙЛБРЕЙКА</text>
+    <text x="60" y="333" fill="#747d89" font-family="Segoe UI,Arial,sans-serif" font-size="14" letter-spacing="2">РУКОВОДСТВО + OFFLINE PYTHON TOOL</text>
+    <rect x=".5" y=".5" width="1279" height="379" rx="18" fill="none" stroke="#333945"/>
+  </g>
+</svg>

@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+.venv/
+private/
+backups/
+*.imazingapp
+*.zip
+*.plist
+users*.xml*
+*.report.json
+.env*
