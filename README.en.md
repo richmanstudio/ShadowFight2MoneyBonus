@@ -48,19 +48,21 @@ On the release page, open **Assets**, download `SF2-Save-Editor-Windows.exe`, an
 
 **4. Restore the modified save.** In iMazing, choose **Restore App Data** and select your newly generated file. Your iPhone may restart and ask you to sign in to your Apple Account again.
 
-**5. Disconnect before opening the game.** Turn on Airplane Mode **and turn Wi-Fi off separately**, then launch the game.
+**5. Go offline only for the first launch after importing.** Enable Airplane Mode and turn off Wi-Fi, launch SF2, finish a battle **or buy an item with in-game currency**, fully close the game, and then reconnect. Later launches can be normal.
 
 **👉 [Full step-by-step beginner's guide](docs/START_HERE_EN.md)**
 
-## ⚠️ Important: play offline EVERY time
+## ⚠️ Go offline ONCE after importing a modified save
 
-**Before EVERY launch using your modified save:**
+**After each new save import, follow the owner's tested first-launch procedure:**
 
-1. Switch on **Airplane Mode**.
-2. Make sure **Wi-Fi is OFF separately** — iOS may leave it enabled.
-3. Make sure cellular internet is unavailable. Stay offline until you fully close the game.
+1. **Before the first game launch**, enable Airplane Mode **and separately turn Wi-Fi OFF**. Cellular internet must also be unavailable.
+2. Open Shadow Fight 2 **offline**.
+3. **Complete one battle OR buy a normal item using in-game currency.** No real-money purchase is needed. This gives the game an opportunity to write the updated state.
+4. **Fully close the game** while still offline.
+5. **Turn internet access back on.** You can launch the game normally afterward; Airplane Mode is **not required on every subsequent launch**.
 
-This reduces the risk of a cloud save being offered or restored over the modified local save. It **does not guarantee** bypassing every integrity check or recovering already overwritten progress.
+**Repeat only after importing another modified save.** This is the project owner's reported successful procedure on one iPhone, **not** a guarantee about cloud synchronization on all devices. If prompted to choose cloud or local progress, compare them carefully instead of overwriting your save automatically.
 
 ## Frequently asked questions
 
