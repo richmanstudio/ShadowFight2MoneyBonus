@@ -141,7 +141,7 @@ class NewFeatureTests(unittest.TestCase):
         # ForgeMaterial3 is intentionally absent in this fixture (like some live saves).
         self.xml = XML.replace(
             b'    </Warrior>',
-            b'      <Currencies ForgeMaterial1="20" ForgeMaterial2="10" />\\r\\n'
+            b'      <Currencies ForgeMaterial1="20" ForgeMaterial2="10" />\r\n'
             b'    </Warrior>'
         )
         self.src = fixture(self.root / 'original.imazingapp', xml=self.xml)
