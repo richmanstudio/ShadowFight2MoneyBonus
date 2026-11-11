@@ -19,7 +19,7 @@ This release extends the proven coins/gems editor with additional fields present
 2. Use `SF2-Save-Editor-Windows.exe` from this beta release, or run `python gui.py` (Python 3.10+).
 3. Verify the **original unmodified archive**. If the original hash fails verification, stop.
 4. Try small amounts and optionally tick **Add unlimited energy**. Export a **new** archive.
-5. Recheck the output, restore through iMazing, then launch SF2 **fully offline**. Use Airplane Mode and separately turn off Wi-Fi before each launch; keep the game offline throughout the session.
+5. Recheck the output, restore through iMazing, then launch SF2 **offline once after import** (Airplane Mode on, Wi-Fi off), complete a battle or buy an ordinary item with in-game currency, and fully close the game before reconnecting. Later launches can use the internet normally, as reported by the project owner on one iPhone.
 6. Check whether energy/orbs actually work. If not, restore the original archive and open an issue with only non-sensitive versions/errors. **Never upload your personal XML, plist or .imazingapp.**
 
 ## CLI example
