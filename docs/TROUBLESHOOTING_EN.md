@@ -12,7 +12,7 @@ This means the game could not accept the save. It **does not always mean the sam
 2. In the editor, run **Verify archive and HASH** on the original file. If verification fails, **stop** and make a fresh export rather than guessing.
 3. Only change coins/gems for your first try. Start with modest values; the upper limit on iOS has not been confirmed.
 4. Export to a new file so your original is kept safely.
-5. Restore through iMazing. **Before opening the game, enable Airplane Mode and separately turn off Wi-Fi**, then stay offline until the game is closed.
+5. Restore through iMazing. **For the first launch only**, enable Airplane Mode, turn Wi-Fi off, enter SF2, complete a battle or buy an ordinary item with in-game currency, **fully close the game**, then reconnect.
 
 If the unmodified original also fails after restore, the problem may be the restore process or game version, not just the edited hash.
 
@@ -20,7 +20,7 @@ If the unmodified original also fails after restore, the problem may be the rest
 
 You may have restored the wrong file, imported an older snapshot, or selected cloud progress. Check your new output filename and your save's original export date. Never accept a cloud/local conflict prompt without checking the progress being offered.
 
-**Before EVERY launch with a modified save:** enable Airplane Mode and **turn off Wi-Fi separately**; keep cellular internet unavailable. This reduces cloud-sync overwrite risk, but is not a guarantee.
+**After each modified-save import (first launch only):** switch on Airplane Mode, separately disable Wi-Fi, play one battle or buy a normal item with in-game currency, fully close SF2, then reconnect. Normal subsequent launches do not require going offline. This is based on the owner's one-device experience; cloud save behavior can differ on other versions. Always keep your original backup.
 
 ## “Original hash could not be reproduced uniquely”
 
