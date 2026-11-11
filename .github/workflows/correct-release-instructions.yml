@@ -1,0 +1,28 @@
+name: Correct saved release instructions
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/correct-release-instructions.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update-notes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Update release pages without changing binaries or tags
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh release view v1.0.0 --repo "${{ github.repository }}"
+          gh release view v1.1.0-beta.1 --repo "${{ github.repository }}"
+          gh release view v1.1.0 --repo "${{ github.repository }}"
+          gh release edit v1.0.0 --repo "${{ github.repository }}" --notes-file RELEASE_NOTES.md
+          gh release edit v1.1.0-beta.1 --repo "${{ github.repository }}" --notes-file RELEASE_NOTES_v1.1.0-beta.1.md
+          gh release edit v1.1.0 --repo "${{ github.repository }}" --notes-file RELEASE_NOTES_v1.1.0.md
+          echo "Updated instructions for all three releases; release assets remain unchanged."
