@@ -63,18 +63,20 @@ You now have two files: the original safe backup and the newly modified copy.
 
 Do not uninstall the game or erase your phone yourself.
 
-## Step 5 — Play OFFLINE on EVERY launch
+## Step 5 — One OFFLINE launch after importing
 
-**Not just the first time.** Before **every** launch with a modified save:
+**You do NOT need to go offline every time you open the game.** The project owner's successful procedure after each modified-save import was:
 
-1. Turn on **Airplane Mode**.
-2. Make sure **Wi-Fi is OFF separately** — iOS may leave Wi-Fi on while Airplane Mode is active.
-3. Check that cellular internet is also unavailable.
-4. Open Shadow Fight 2 and stay offline until you fully close the game.
+1. **Before opening the game for the first time**, turn on **Airplane Mode**.
+2. Turn **Wi-Fi OFF separately** — iOS can leave Wi-Fi enabled in Airplane Mode. Cellular internet should also be unavailable.
+3. **Open Shadow Fight 2 offline.**
+4. **Finish one battle OR buy a normal item with in-game currency.** You do not need to spend real money. This gives the game a chance to write its updated save state.
+5. **Fully close the game**, keeping the phone offline.
+6. **Reconnect to the internet.** You can launch the game normally afterward.
 
-This reduces the chance of the game offering or restoring a **cloud save over your modified local progress**. It does **not** guarantee that all checks are avoided or restore overwritten data.
+**Repeat this process only after another modified-save import.**
 
-Now check your coins, gems, level, equipment and map.
+This is a successful procedure **reported by one iPhone user**, not a guarantee of cloud-sync behavior across versions. If you see a local-vs-cloud save selection, check both carefully before choosing. Keep your untouched `original.imazingapp`.
 
 ## Common questions
 
