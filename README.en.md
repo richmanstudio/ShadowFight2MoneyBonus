@@ -30,6 +30,15 @@ It does not unlock paid content, impersonate purchases, or modify server-owned r
 
 **Before you do anything:** back up the iPhone, export a **fresh unmodified** app save, and keep that original archive somewhere safe. An exported snapshot will not include progress you make later.
 
+## Important: play offline on EVERY launch of a modified save
+
+> [!CAUTION]
+> **Before EVERY launch of Shadow Fight 2 with your modified save, disconnect the iPhone from the internet completely.** Turn on **Airplane Mode** and separately ensure **Wi-Fi is OFF** (iOS may keep Wi-Fi enabled while Airplane Mode is on). Cellular data must also be unavailable. Do this **before opening the game**, and stay offline throughout the play session.
+>
+> This reduces the risk that game services offer or restore a **cloud save instead of your modified local progress**. Cloud-sync behavior varies between game versions: Airplane Mode **does not guarantee** protection from every integrity check or recover data already replaced.
+>
+> If the game is already running, force-close it first, disconnect the phone, and then relaunch. Keep your original `original.imazingapp` for recovery.
+
 ## Option A: Windows GUI (recommended)
 
 1. Download the source ZIP from GitHub and extract it (or download the Windows executable from a release).
@@ -38,7 +47,7 @@ It does not unlock paid content, impersonate purchases, or modify server-owned r
 4. In the GUI, select that **untouched** `.imazingapp` file and press **Verify archive and HASH**. If verification fails, **stop**. Do not use an edited file as your supposed original.
 5. Select the currencies you want to change and enter the desired numbers.
 6. Choose a **different** output filename, such as `modified.imazingapp`. Click **Build .imazingapp**.
-7. Only after successful output verification, close the game on your iPhone and use iMazing's **Restore App Data** feature to import the new archive. Follow the iOS recovery/setup screens and confirm that the level, inventory and currency are correct.
+7. Only after successful output verification, close the game on your iPhone and use iMazing's **Restore App Data** feature to import the new archive. Follow the iOS recovery/setup screens. **Before opening the game — and on every subsequent launch — enable Airplane Mode and turn Wi-Fi off.** Confirm that the level, inventory and currency are correct while offline.
 
 The editor does not overwrite an existing output file. Do not delete the original save.
 
