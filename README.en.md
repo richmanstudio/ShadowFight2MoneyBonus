@@ -4,14 +4,14 @@
 
 <h1 align="center">Shadow Fight 2 — iPhone Save Editor</h1>
 
-<p align="center"><strong>Edit coins and gems in your own save. No jailbreak. No coding.</strong></p>
+<p align="center"><strong>Coins, gems, enchantment orbs and energy. No jailbreak. No coding.</strong></p>
 
 <p align="center">
   <a href="README.md">🇷🇺 Русский</a> · 🇬🇧 English
 </p>
 
 <p align="center">
-  <a href="https://github.com/richmanstudio/ShadowFight2MoneyBonus/releases/tag/v1.0.0"><strong>⬇️ DOWNLOAD — Stable version</strong></a>
+  <a href="https://github.com/richmanstudio/ShadowFight2MoneyBonus/releases/tag/v1.1.0"><strong>⬇️ DOWNLOAD — Stable version</strong></a>
   &nbsp; · &nbsp;
   <a href="docs/START_HERE_EN.md"><strong>📖 BEGINNER'S GUIDE</strong></a>
 </p>
@@ -25,18 +25,18 @@
 |---|---|
 | 🪙 **Coins** | ✅ Confirmed on one iPhone |
 | 💎 **Gems** | ✅ Confirmed on one iPhone |
-| 🟢 **Green enchantment orbs** | 🧪 Experimental |
-| 🔴 **Red enchantment orbs** | 🧪 Experimental |
-| 🟣 **Purple enchantment orbs** | 🧪 Experimental |
-| ⚡ **Unlimited Energy** | 🧪 Experimental |
+| 🟢 **Green enchantment orbs** | ✅ Owner-confirmed on one iPhone |
+| 🔴 **Red enchantment orbs** | ✅ Owner-confirmed on one iPhone |
+| 🟣 **Purple enchantment orbs** | ✅ Owner-confirmed on one iPhone |
+| ⚡ **Unlimited Energy** | ✅ Owner-confirmed on one iPhone |
 
-**[Get stable v1.0.0 — coins & gems](https://github.com/richmanstudio/ShadowFight2MoneyBonus/releases/tag/v1.0.0)**
+**[⬇️ Download current v1.1.0 — coins, gems, orbs & energy](https://github.com/richmanstudio/ShadowFight2MoneyBonus/releases/tag/v1.1.0)**
 
-**[Get test v1.1.0-beta.1 — orbs & energy](https://github.com/richmanstudio/ShadowFight2MoneyBonus/releases/tag/v1.1.0-beta.1)**
+[Older v1.0.0 — coins & gems only](https://github.com/richmanstudio/ShadowFight2MoneyBonus/releases/tag/v1.0.0)
 
 On the release page, open **Assets**, download `SF2-Save-Editor-Windows.exe`, and run it on your **PC**.
 
-The orb and energy features have only been tested at the save-file level. **They are not yet confirmed in the iOS game.** Keep a backup before experimenting.
+**The project owner reports that coins, gems, enchantment orbs and unlimited energy worked on their iPhone.** This is a single-user, single-device confirmation, not a compatibility guarantee. Keep an untouched original backup.
 
 ## How it works — in plain English
 
@@ -44,7 +44,7 @@ The orb and energy features have only been tested at the save-file level. **They
 
 **2. Open it in the editor.** Click **Browse** and then **Verify archive and HASH**. That's simply an integrity check to make sure the save is usable.
 
-**3. Enter the new values.** Choose how many coins and/or gems you want, then click **Save as** and **Build .imazingapp**. The program creates a new copy and keeps the original.
+**3. Enter the new values.** Choose your coin, gem or orb amounts and optionally enable unlimited energy, then click **Save as** and **Build .imazingapp**. The program creates a new copy and keeps the original.
 
 **4. Restore the modified save.** In iMazing, choose **Restore App Data** and select your newly generated file. Your iPhone may restart and ask you to sign in to your Apple Account again.
 
@@ -102,7 +102,7 @@ Our editor is free and open source. **iMazing is a separate product**, and some 
 <details>
 <summary><strong>Does it work on my iPhone?</strong></summary>
 
-One user-confirmed case: **original Shadow Fight 2 2.46.0, iOS 27.2, Windows + iMazing**, with successful coin and gem changes. Compatibility with other versions is not guaranteed. Orbs and unlimited energy are experimental.
+One user-confirmed case: **original Shadow Fight 2 2.46.0, iOS 27.2, Windows + iMazing**. The owner reports successful coins, gems, enchantment orbs and unlimited energy on their iPhone. Compatibility with other devices or versions is not guaranteed.
 
 </details>
 
