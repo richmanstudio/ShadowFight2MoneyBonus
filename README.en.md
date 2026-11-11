@@ -1,158 +1,123 @@
-# ShadowFight2MoneyBonus
+<p align="center">
+  <img src="assets/banner.svg" alt="Shadow Fight 2 Save Editor" width="100%">
+</p>
 
-**Change coins and gems in the original Shadow Fight 2 on iPhone, without jailbreaking or replacing your own save.**
+<h1 align="center">Shadow Fight 2 — iPhone Save Editor</h1>
 
-[Русский README](README.md) · [Detailed guide (Russian)](docs/GUIDE.md) · [Hash algorithm](docs/HASH.md) · [Troubleshooting](docs/TROUBLESHOOTING.md) · [GUI instructions](docs/GUI.md)
+<p align="center"><strong>Edit coins and gems in your own save. No jailbreak. No coding.</strong></p>
 
-> **Compatibility evidence:** One owner-reported successful test on Shadow Fight 2 **2.46.0**, **iOS 27.2**, and Windows with iMazing. This is not a guarantee for other game or iOS versions. Always start by verifying the hash of your own untouched save.
+<p align="center">
+  <a href="README.md">🇷🇺 Русский</a> · 🇬🇧 English
+</p>
 
-## What it does
+<p align="center">
+  <a href="https://github.com/richmanstudio/ShadowFight2MoneyBonus/releases/tag/v1.0.0"><strong>⬇️ DOWNLOAD — Stable version</strong></a>
+  &nbsp; · &nbsp;
+  <a href="docs/START_HERE_EN.md"><strong>📖 BEGINNER'S GUIDE</strong></a>
+</p>
 
-This project edits your **existing local app-data export** rather than providing somebody else's saved game or a modified IPA. It can:
+> [!IMPORTANT]
+> **This is a Windows PC program, NOT an iPhone app.** You'll need a Windows computer, your iPhone, a cable and [iMazing](https://imazing.com/). **No jailbreak or programming skills needed.** iMazing is separate software; some of its features may require a paid license.
 
-- Read an exported `.imazingapp` archive.
-- Verify the original `users.xml.hash` using the matching value found in the archive's local app preferences.
-- Change the active character's `Money` (coins) and/or `Bonus` (gems).
-- **Experimental:** Edit three types of enchantment orbs and add an unlimited-energy item.
-- Update both `users.xml` and `users_backup.xml` with matching `.hash` files.
-- Verify the new archive, while preserving all other files in the archive.
-- Offer a **Windows graphical interface** (`gui.py`) or a Python command-line interface (`sf2save.py`).
+## What can I change?
 
-The tool works **offline**, does not require your Apple Account password, and never sends your archive to a server. It does not directly connect to your phone: **iMazing performs the export and restore**.
-
-It does not unlock paid content, impersonate purchases, or modify server-owned resources.
-
-## Requirements
-
-- Windows computer, iPhone with the original Shadow Fight 2.
-- iMazing, installed separately (its relevant features may require a license).
-- **For source-code usage:** Python 3.10+; the project itself uses only the Python standard library, including Tkinter for the GUI.
-- **For a standalone Windows executable:** Download the `.exe` from [Releases](https://github.com/richmanstudio/ShadowFight2MoneyBonus/releases) when available. No Python install is needed for the bundled build.
-
-**Before you do anything:** back up the iPhone, export a **fresh unmodified** app save, and keep that original archive somewhere safe. An exported snapshot will not include progress you make later.
-
-## Important: play offline on EVERY launch of a modified save
-
-> [!CAUTION]
-> **Before EVERY launch of Shadow Fight 2 with your modified save, disconnect the iPhone from the internet completely.** Turn on **Airplane Mode** and separately ensure **Wi-Fi is OFF** (iOS may keep Wi-Fi enabled while Airplane Mode is on). Cellular data must also be unavailable. Do this **before opening the game**, and stay offline throughout the play session.
->
-> This reduces the risk that game services offer or restore a **cloud save instead of your modified local progress**. Cloud-sync behavior varies between game versions: Airplane Mode **does not guarantee** protection from every integrity check or recover data already replaced.
->
-> If the game is already running, force-close it first, disconnect the phone, and then relaunch. Keep your original `original.imazingapp` for recovery.
-
-## Option A: Windows GUI (recommended)
-
-1. Download the source ZIP from GitHub and extract it (or download the Windows executable from a release).
-2. With Python installed, launch `python gui.py` from the repository folder. For the standalone build, open the released `.exe`.
-3. In iMazing, use **Manage Apps → Device → Shadow Fight 2 → Back Up / Export App Data**. Save a fresh `original.imazingapp` from your iPhone.
-4. In the GUI, select that **untouched** `.imazingapp` file and press **Verify archive and HASH**. If verification fails, **stop**. Do not use an edited file as your supposed original.
-5. Select the currencies you want to change and enter the desired numbers. Optionally edit green/red/purple orbs and enable the experimental **Unlimited Energy** option.
-6. Choose a **different** output filename, such as `modified.imazingapp`. Click **Build .imazingapp**.
-7. Only after successful output verification, close the game on your iPhone and use iMazing's **Restore App Data** feature to import the new archive. Follow the iOS recovery/setup screens. **Before opening the game — and on every subsequent launch — enable Airplane Mode and turn Wi-Fi off.** Confirm that the level, inventory and currency are correct while offline.
-
-The editor does not overwrite an existing output file. Do not delete the original save.
-
-[GUI instructions and screenshots guidance](docs/GUI.md)
-
-## Option B: Command-line usage
-
-Download and unzip the repository, then open PowerShell in the folder with `sf2save.py`.
-
-**Inspect** the XML balance without verifying the hash:
-
-```powershell
-python sf2save.py inspect "D:\SF2\original.imazingapp"
-```
-
-**Verify** the original hash before editing:
-
-```powershell
-python sf2save.py verify "D:\SF2\original.imazingapp"
-```
-
-The JSON output must include `"original_hash_verified": true`. If a backup exists, review `backup_hash_verified` as well.
-
-**Patch** the existing save into a separate output archive:
-
-```powershell
-python sf2save.py patch "D:\SF2\original.imazingapp" --output "D:\SF2\modified.imazingapp" --money 10000000 --bonus 1000
-```
-
-**Re-check** the new archive:
-
-```powershell
-python sf2save.py verify "D:\SF2\modified.imazingapp"
-```
-
-The values above are **examples**, not tested maximums. You can omit `--money` or `--bonus` if you want to change only one currency. On Windows, `py` may be used instead of `python`.
-
-## Experimental: enchantment orbs and Unlimited Energy
-
-In the game's `users.xml`, forge materials are stored under the active character's `Currencies` element:
-
-| Material field | In-game resource |
+| In the game | Status |
 |---|---|
-| `ForgeMaterial1` | Green enchantment orbs |
-| `ForgeMaterial2` | Red enchantment orbs |
-| `ForgeMaterial3` | Purple enchantment orbs |
+| 🪙 **Coins** | ✅ Confirmed on one iPhone |
+| 💎 **Gems** | ✅ Confirmed on one iPhone |
+| 🟢 **Green enchantment orbs** | 🧪 Experimental |
+| 🔴 **Red enchantment orbs** | 🧪 Experimental |
+| 🟣 **Purple enchantment orbs** | 🧪 Experimental |
+| ⚡ **Unlimited Energy** | 🧪 Experimental |
 
-`ForgeMaterial3` may be absent from some saves. The editor can add it to an **existing** `Currencies` element. For unlimited energy, it adds a single `Unlimited_Energy` item under the character's `Items`; repeat runs will not duplicate it.
+**[Get stable v1.0.0 — coins & gems](https://github.com/richmanstudio/ShadowFight2MoneyBonus/releases/tag/v1.0.0)**
 
-**CLI example:**
+**[Get test v1.1.0-beta.1 — orbs & energy](https://github.com/richmanstudio/ShadowFight2MoneyBonus/releases/tag/v1.1.0-beta.1)**
 
-```powershell
-python sf2save.py patch "D:\SF2\original.imazingapp" --output "D:\SF2\custom.imazingapp" --orb-green 100000 --orb-red 50000 --orb-purple 10000 --unlimited-energy
-```
+On the release page, open **Assets**, download `SF2-Save-Editor-Windows.exe`, and run it on your **PC**.
 
-> **Validation notice:** The field names and item name are supported by publicly documented save examples. However, their **in-game behavior on iOS has not yet been verified**. Automated tests confirm XML structure, hashes, and archive preservation — not an unlocked feature in the game. Keep your original save and a full phone backup, test conservative values first, and keep the modified game offline before every launch as described above.
+The orb and energy features have only been tested at the save-file level. **They are not yet confirmed in the iOS game.** Keep a backup before experimenting.
 
-## How is the hash calculated?
+## How it works — in plain English
 
-A Shadow Fight 2 save is **not** protected by a plain MD5 of the file. For the tested format, a normalized XML representation is hashed and combined with a device-specific value, the app identifier and a constant suffix:
+**1. Save your progress.** Connect the iPhone to your PC, make a backup and use iMazing to export Shadow Fight 2 app data. You'll get a file like `original.imazingapp`. **Keep it safe.**
 
-```text
-first = UPPERCASE_HEX(MD5(UTF8(normalized_xml)))
-hash  = UPPERCASE_HEX(MD5(UTF8(first + device_value + app_id + suffix)))
-```
+**2. Open it in the editor.** Click **Browse** and then **Verify archive and HASH**. That's simply an integrity check to make sure the save is usable.
 
-The implementation derives possible device values from the **local** Preferences plist and accepts a candidate only when it reproduces the **original untouched hash exactly**. Unknown or ambiguous values fail closed. The XML is not reserialized; the existing textual format is preserved except for the chosen numeric attributes.
+**3. Enter the new values.** Choose how many coins and/or gems you want, then click **Save as** and **Build .imazingapp**. The program creates a new copy and keeps the original.
 
-[Technical method, normalization caveats and research credit](docs/HASH.md)
+**4. Restore the modified save.** In iMazing, choose **Restore App Data** and select your newly generated file. Your iPhone may restart and ask you to sign in to your Apple Account again.
 
-## What remains unchanged?
+**5. Disconnect before opening the game.** Turn on Airplane Mode **and turn Wi-Fi off separately**, then launch the game.
 
-The active character's level, experience, items, fight history and other XML attributes are preserved. All unrelated archive entries, including plist and binary data, keep their original contents. Both resulting save XML files are consistent; your **original** archive and its earlier backup remain unchanged.
+**👉 [Full step-by-step beginner's guide](docs/START_HERE_EN.md)**
 
-Please note that importing an app-data snapshot rolls back any gameplay since that snapshot. Export your newest progress and stop playing until restore is complete.
+## ⚠️ Important: play offline EVERY time
 
-## Troubleshooting
+**Before EVERY launch using your modified save:**
 
-- **“Your game data may be corrupted”**: Check the original save hash first, then verify the output. Missing hashes or hashes carried over from an edited save can trigger integrity failures. The same message can have other causes.
-- **“Original hash could not be reproduced uniquely”**: Your archive may not contain a matching original XML/hash pair, device identifier or supported XML format. Export a fresh untouched save; do **not** guess a device ID.
-- **Balances revert**: Confirm which archive was imported, whether a backup or cloud save was chosen, and whether the game has server-side state.
-- **Unexpected money display in later chapters**: Some currencies use scaling/denomination values. Do not change those fields without validating the result.
-- **Python or Tkinter unavailable**: Install Python from python.org with Tcl/Tk support, or use a Windows executable from a release.
+1. Switch on **Airplane Mode**.
+2. Make sure **Wi-Fi is OFF separately** — iOS may leave it enabled.
+3. Make sure cellular internet is unavailable. Stay offline until you fully close the game.
 
-[Full troubleshooting guide (Russian)](docs/TROUBLESHOOTING.md)
+This reduces the risk of a cloud save being offered or restored over the modified local save. It **does not guarantee** bypassing every integrity check or recovering already overwritten progress.
 
-## Verification & tests
+## Frequently asked questions
 
-Unit tests use **synthetic fixtures**, not personal account data. The CI matrix runs tests on Windows and Linux using Python 3.10 and 3.13:
+<details>
+<summary><strong>Can I do it using only an iPhone?</strong></summary>
 
-```powershell
-python -m unittest discover -s tests -v
-```
+No. You need Windows and iMazing to move your save data. This is not an iOS app.
 
-A passing test suite confirms the tool's logic, **not** universal in-game compatibility. Read [validation scope](docs/VALIDATION.md).
+</details>
 
-## Privacy and responsible use
+<details>
+<summary><strong>Will I lose my progress?</strong></summary>
 
-Never upload actual `.imazingapp` files, `users.xml`, `.plist`, Apple credentials or device identifiers to a public GitHub issue. They may expose private account or device information. For bug reports, include only your app/iOS/iMazing version, a redacted error and a synthetic sample where possible.
+The editor modifies selected values in **your own save**. But restoring a snapshot can roll back progress made after exporting it. Keep both an iPhone backup and the untouched `original.imazingapp`. We cannot guarantee against data loss.
 
-This is an unofficial research/utility project, not affiliated with Nekki, Apple or iMazing. Use it only with saves you own, and understand the game or platform rules that may apply. This repository ships no copyrighted game assets or pirated IPA files.
+</details>
 
-## Credits and license
+<details>
+<summary><strong>Why does iMazing back up or restart my iPhone?</strong></summary>
 
-- [Original hash-algorithm investigation](https://github.com/moltinginstar/sf2mod/blob/main/WRITEUP.md), performed on Android; the source of the constant and general formula.
-- [iMazing's official app-data export/restore guide](https://imazing.com/guides/how-to-export-backup-and-transfer-ios-apps-data-and-settings).
-- [MIT License](LICENSE).
+Those steps can be part of app-data export and restore. iOS may ask you to sign in to your Apple Account again. Follow iMazing and iOS instructions; do not uninstall the game or erase the phone yourself.
+
+</details>
+
+<details>
+<summary><strong>What if I get “Your game data may be corrupted”?</strong></summary>
+
+The save may fail an integrity check, or the game version might be incompatible. Don't delete the original file. See [Troubleshooting](docs/TROUBLESHOOTING.md).
+
+</details>
+
+<details>
+<summary><strong>Is it free?</strong></summary>
+
+Our editor is free and open source. **iMazing is a separate product**, and some of its features may require a paid license.
+
+</details>
+
+<details>
+<summary><strong>Does it work on my iPhone?</strong></summary>
+
+One user-confirmed case: **original Shadow Fight 2 2.46.0, iOS 27.2, Windows + iMazing**, with successful coin and gem changes. Compatibility with other versions is not guaranteed. Orbs and unlimited energy are experimental.
+
+</details>
+
+## Want to look under the hood?
+
+Regular players only need the **[beginner's guide](docs/START_HERE_EN.md)**. For developers and advanced users:
+
+- [CLI / Python guide (Russian)](docs/GUIDE.md)
+- [How the save hash works](docs/HASH.md)
+- [Windows graphical editor guide](docs/GUI.md)
+- [Editor source code](sf2save.py) · [Desktop UI source](gui.py)
+- [Validation and limitations](docs/VALIDATION.md) · [MIT license](LICENSE)
+
+Found a bug? [Open an issue](https://github.com/richmanstudio/ShadowFight2MoneyBonus/issues) with your game, iOS and iMazing versions. **Never share your real save, plist, device identifiers or Apple Account credentials publicly.**
+
+---
+
+*Independent project, not affiliated with Nekki, Apple or iMazing. Does not provide official purchases or modify server-side resources.*
