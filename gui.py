@@ -35,6 +35,16 @@ STRINGS = {
         "browse": "Выбрать",
         "verify": "Проверить файл и HASH",
         "balance": "02  БАЛАНС И ИЗМЕНЕНИЯ",
+        "forging": "03  СФЕРЫ ЗАЧАРОВАНИЯ И ЭНЕРГИЯ",
+        "forging_hint": "Три цвета сфер и предмет Unlimited_Energy. Для iOS эти опции экспериментальные.",
+        "orb_green": "Зелёные сферы",
+        "orb_red": "Красные сферы",
+        "orb_purple": "Фиолетовые сферы",
+        "enable_orb_green": "Изменить зелёные",
+        "enable_orb_red": "Изменить красные",
+        "enable_orb_purple": "Изменить фиолетовые",
+        "energy": "Добавить бесконечную энергию",
+        "energy_hint": "Для проверки требуется собственная резервная копия и импорт через iMazing.",
         "balance_hint": "Значения загрузятся после успешной проверки исходного хеша.",
         "money": "Монеты (Money)",
         "bonus": "Кристаллы (Bonus)",
@@ -42,7 +52,7 @@ STRINGS = {
         "not_loaded": "Не проверено",
         "modify_money": "Изменить монеты",
         "modify_bonus": "Изменить кристаллы",
-        "output": "03  НОВЫЙ ПАКЕТ",
+        "output": "04  НОВЫЙ ПАКЕТ",
         "output_hint": "Исходный файл не перезаписывается. Выберите НОВОЕ имя.",
         "save_as": "Сохранить как",
         "build": "Создать .imazingapp",
@@ -73,6 +83,16 @@ STRINGS = {
         "browse": "Browse",
         "verify": "Verify archive and HASH",
         "balance": "02  BALANCE & CHANGES",
+        "forging": "03  ENCHANTMENT ORBS & ENERGY",
+        "forging_hint": "Three orb colors and Unlimited_Energy item. Experimental on iOS.",
+        "orb_green": "Green orbs",
+        "orb_red": "Red orbs",
+        "orb_purple": "Purple orbs",
+        "enable_orb_green": "Edit green",
+        "enable_orb_red": "Edit red",
+        "enable_orb_purple": "Edit purple",
+        "energy": "Add unlimited energy",
+        "energy_hint": "Test with your own backup and import through iMazing.",
         "balance_hint": "Values appear after the original save hash is verified.",
         "money": "Coins (Money)",
         "bonus": "Gems (Bonus)",
@@ -80,7 +100,7 @@ STRINGS = {
         "not_loaded": "Not verified",
         "modify_money": "Edit coins",
         "modify_bonus": "Edit gems",
-        "output": "03  NEW ARCHIVE",
+        "output": "04  NEW ARCHIVE",
         "output_hint": "Your original is never overwritten. Choose a NEW filename.",
         "save_as": "Save as",
         "build": "Build .imazingapp",
@@ -114,12 +134,20 @@ class SaveEditor(tk.Tk):
         self.bonus = tk.StringVar()
         self.edit_money = tk.BooleanVar(value=True)
         self.edit_bonus = tk.BooleanVar(value=True)
+        self.orbs = {
+            key: tk.StringVar(value="0")
+            for key in ("ForgeMaterial1", "ForgeMaterial2", "ForgeMaterial3")
+        }
+        self.edit_orbs = {
+            key: tk.BooleanVar(value=False) for key in self.orbs
+        }
+        self.unlimited_energy = tk.BooleanVar(value=False)
         self.verified_path: Path | None = None
         self.busy = False
         self.localized = {}
         self.configure(bg=BG)
-        self.geometry("850x740")
-        self.minsize(760, 680)
+        self.geometry("900x820")
+        self.minsize(760, 660)
         self._build()
         self._translate()
         self.after(120, self._poll)
@@ -169,8 +197,23 @@ class SaveEditor(tk.Tk):
         self.language.pack(side="right")
         self._label(header, "subtitle", color=MUTED).pack(anchor="w", pady=(4, 0))
 
-        self.body = tk.Frame(self, bg=BG, padx=30)
-        self.body.pack(fill="both", expand=True)
+        scroll_host = tk.Frame(self, bg=BG)
+        scroll_host.pack(fill="both", expand=True)
+        self.scrollbar = tk.Scrollbar(scroll_host)
+        self.scrollbar.pack(side="right", fill="y")
+        self.body_canvas = tk.Canvas(scroll_host, bg=BG, highlightthickness=0,
+                                     yscrollcommand=self.scrollbar.set)
+        self.body_canvas.pack(side="left", fill="both", expand=True)
+        self.scrollbar.configure(command=self.body_canvas.yview)
+        self.body = tk.Frame(self.body_canvas, bg=BG, padx=30)
+        self.body_window = self.body_canvas.create_window((0, 0),
+                            window=self.body, anchor="nw")
+        self.body.bind("<Configure>", lambda _e: self.body_canvas.configure(
+            scrollregion=self.body_canvas.bbox("all")))
+        self.body_canvas.bind("<Configure>", lambda e: self.body_canvas.itemconfigure(
+            self.body_window, width=e.width))
+        self.body_canvas.bind("<MouseWheel>", lambda e: self.body_canvas.yview_scroll(
+            -int(e.delta / 120), "units"))
 
         section = self._section("source", "source_hint")
         row = tk.Frame(section, bg=PANEL)
@@ -215,6 +258,39 @@ class SaveEditor(tk.Tk):
             cb.pack(anchor="w")
         columns.columnconfigure(0, weight=1)
         columns.columnconfigure(1, weight=1)
+
+        forge = self._section("forging", "forging_hint")
+        orb_row = tk.Frame(forge, bg=PANEL)
+        orb_row.pack(fill="x")
+        for col, (key, title, edit_key) in enumerate([
+            ("ForgeMaterial1", "orb_green", "enable_orb_green"),
+            ("ForgeMaterial2", "orb_red", "enable_orb_red"),
+            ("ForgeMaterial3", "orb_purple", "enable_orb_purple"),
+        ]):
+            area = tk.Frame(orb_row, bg=PANEL)
+            area.grid(row=0, column=col, sticky="ew",
+                      padx=(0, 12 if col < 2 else 0))
+            self._label(area, title, color=MUTED,
+                        font=("Segoe UI", 10)).pack(anchor="w")
+            self._field(area, self.orbs[key]).pack(fill="x", ipady=9, pady=(6, 8))
+            cb = tk.Checkbutton(
+                area, text="", variable=self.edit_orbs[key], bg=PANEL, fg=FG,
+                selectcolor=FIELD, activebackground=PANEL, activeforeground=FG,
+                font=("Segoe UI", 10), bd=0, highlightthickness=0)
+            self.localized[edit_key + ":cb"] = (cb, edit_key)
+            cb.pack(anchor="w")
+            orb_row.columnconfigure(col, weight=1)
+
+        energy_box = tk.Frame(forge, bg=PANEL)
+        energy_box.pack(fill="x", pady=(14, 0))
+        cb_energy = tk.Checkbutton(
+            energy_box, text="", variable=self.unlimited_energy, bg=PANEL, fg=FG,
+            selectcolor=FIELD, activebackground=PANEL, activeforeground=FG,
+            font=("Segoe UI Semibold", 11), bd=0, highlightthickness=0)
+        self.localized["energy:cb"] = (cb_energy, "energy")
+        cb_energy.pack(anchor="w")
+        self._label(energy_box, "energy_hint", color=MUTED,
+                    font=("Segoe UI", 9)).pack(anchor="w", pady=(4, 0))
 
         section = self._section("output", "output_hint")
         output_row = tk.Frame(section, bg=PANEL)
@@ -309,16 +385,24 @@ class SaveEditor(tk.Tk):
         if target.resolve() == source.resolve():
             messagebox.showerror(self._text("error"), self._text("same_path"))
             return
-        if not self.edit_money.get() and not self.edit_bonus.get():
+        if not (self.edit_money.get() or self.edit_bonus.get()
+                or any(v.get() for v in self.edit_orbs.values())
+                or self.unlimited_energy.get()):
             messagebox.showerror(self._text("error"), self._text("need_change"))
             return
         money = self.money.get().strip() if self.edit_money.get() else None
         bonus = self.bonus.get().strip() if self.edit_bonus.get() else None
+        forge_materials = {
+            key: self.orbs[key].get().strip()
+            for key in self.orbs if self.edit_orbs[key].get()
+        }
         try:
             if money is not None:
                 sf2save.currency_value(money)
             if bonus is not None:
                 sf2save.currency_value(bonus)
+            for value in forge_materials.values():
+                sf2save.currency_value(value)
         except sf2save.SaveError as exc:
             messagebox.showerror(self._text("error"), str(exc))
             return
@@ -327,7 +411,10 @@ class SaveEditor(tk.Tk):
         self.status.configure(text=self._text("working"), fg=ACCENT)
 
         def work():
-            result = sf2save.patch_archive(source, target, money=money, bonus=bonus)
+            result = sf2save.patch_archive(
+                source, target, money=money, bonus=bonus,
+                unlimited_energy=self.unlimited_energy.get(),
+                forge_materials=forge_materials)
             validation = sf2save.inspect_archive(target, verify=True)
             if not validation.get("original_hash_verified") or not validation.get("backup_hash_verified"):
                 raise sf2save.SaveError("Output XML/hash verification failed.")
@@ -351,6 +438,10 @@ class SaveEditor(tk.Tk):
                     self.verified_path = path
                     self.money.set(result.get("Money") or "")
                     self.bonus.set(result.get("Bonus") or "")
+                    for key in self.orbs:
+                        self.orbs[key].set(result.get(key) or "0")
+                        self.edit_orbs[key].set(False)
+                    self.unlimited_energy.set(bool(result.get("Unlimited_Energy")))
                     self.current_value.configure(text=self._text("verified"), fg=SUCCESS)
                     self.level_value.configure(
                         text=f'{self._text("level")}: {result.get("Level") or "?"}'
