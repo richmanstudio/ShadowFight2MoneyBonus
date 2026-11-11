@@ -47,6 +47,19 @@ python gui.py
 
 Use the language toggle in the upper-right corner to switch between Russian and English.
 
+## Новые настройки / New experimental options
+
+В окне редактора добавлен отдельный блок **«Сферы зачарования и энергия»**. В нём можно:
+
+- указать количество **зелёных** (`ForgeMaterial1`), **красных** (`ForgeMaterial2`) и **фиолетовых** (`ForgeMaterial3`) сфер;
+- отметить галочкой только те сферы, которые нужно изменить; остальные значения сохраняются;
+- включить **«Добавить бесконечную энергию / Add unlimited energy»** — это создаёт предмет `Unlimited_Energy` в сохранении;
+- сохранить новую копию `.imazingapp` с автоматическим пересчётом двух XML/HASH-пар.
+
+**Внимание:** новые опции пока **экспериментальные на iOS**; успешная проверка HASH гарантирует только согласованность файлов, а не принятие опций игрой. Не перезаписывайте свою резервную копию. Для первой пробы используйте небольшие значения сфер.
+
+**English:** In the GUI, choose one or more of **Green/Red/Purple orbs**, enter their values and tick the individual checkboxes. Enable **Add unlimited energy** to insert the `Unlimited_Energy` item. These additions are not yet validated in-game on iOS; always keep your original archive.
+
 ## Дизайн и технические детали
 
 - Два языка: русский и английский.
