@@ -1,4 +1,6 @@
-# Shadow Fight 2 Save Editor — графический интерфейс / GUI
+# Редактор для Windows — Shadow Fight 2
+
+> **Впервые используешь iMazing?** Начни с [простой инструкции для игроков](START_HERE.md) или [English beginner's guide](START_HERE_EN.md). Здесь подробности о программе и её дополнительных настройках.
 
 [← README](../README.md) · [English README](../README.en.md) · [Полный гайд](GUIDE.md)
 
