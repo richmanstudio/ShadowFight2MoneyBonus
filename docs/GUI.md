@@ -22,13 +22,18 @@ python gui.py
 
 ## Пошаговый процесс / Step by step
 
+> [!IMPORTANT]
+> **Внимание: перед КАЖДЫМ входом в игру с изменённым сохранением включайте авиарежим и дополнительно выключайте Wi-Fi.** iOS может оставлять Wi-Fi активным в авиарежиме; убедитесь, что мобильный интернет тоже недоступен. Держите игру офлайн до полного закрытия, чтобы снизить риск загрузки облачного сохранения вместо локального. Это не гарантия против всех игровых проверок.
+>
+> **Important: BEFORE EVERY launch with a modified save, enable Airplane Mode AND turn Wi-Fi off separately.** Keep cellular internet unavailable and stay offline until the game is closed. This reduces the risk of a cloud save overriding your local progress; it is not a guarantee against every check.
+
 1. Сделайте резервную копию iPhone. В iMazing экспортируйте **текущее, нетронутое** сохранение SF2 (`original.imazingapp`), скопируйте его в надёжное место. **Не работайте с единственной копией.**
 2. Нажмите **Выбрать / Browse** и укажите этот исходный архив.
 3. Нажмите **Проверить файл и HASH / Verify archive and HASH**. Проверка должна закончиться успешно. Если исходный хеш не воспроизведён, дальнейшее изменение заблокировано.
 4. Укажите новые значения в полях **Money / Bonus**, отметьте валюты, которые хотите менять.
 5. Нажмите **Сохранить как / Save as** для выбора нового имени. Оно не должно совпадать с исходным или с уже существующим файлом.
 6. Нажмите **Создать .imazingapp / Build .imazingapp**. Программа пересчитает обе пары XML/HASH и повторно проверит готовый архив.
-7. Закройте игру на iPhone, импортируйте полученный файл через iMazing (**Manage Apps → Restore App Data**). Завершите экран настройки устройства и проверьте прогресс и валюту в игре.
+7. Закройте игру на iPhone, импортируйте полученный файл через iMazing (**Manage Apps → Restore App Data**). Завершите экран настройки устройства, **включите авиарежим и вручную выключите Wi-Fi перед запуском SF2**, затем проверьте прогресс и валюту в игре. Повторяйте отключение интернета при каждом последующем запуске.
 
 Проверенный хеш не гарантирует совместимость любой версии игры. Если возникла ошибка, используйте [TROUBLESHOOTING.md](TROUBLESHOOTING.md) и исходный резервный файл.
 
@@ -38,7 +43,7 @@ python gui.py
 2. In the app, **Browse** to the original and click **Verify archive and HASH**.
 3. Enter your desired **Money** and/or **Bonus** values.
 4. Select a **new output path** and click **Build .imazingapp**.
-5. Only after the success dialog, import the generated package through iMazing's **Restore App Data** and verify the game state.
+5. Only after the success dialog, import the generated package through iMazing's **Restore App Data** then **enable Airplane Mode, turn Wi-Fi off, and launch the game offline** to verify the game state. Repeat this before every subsequent launch.
 
 Use the language toggle in the upper-right corner to switch between Russian and English.
 
