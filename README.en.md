@@ -88,7 +88,7 @@ Those steps can be part of app-data export and restore. iOS may ask you to sign 
 <details>
 <summary><strong>What if I get “Your game data may be corrupted”?</strong></summary>
 
-The save may fail an integrity check, or the game version might be incompatible. Don't delete the original file. See [Troubleshooting](docs/TROUBLESHOOTING.md).
+The save may fail an integrity check, or the game version might be incompatible. Don't delete the original file. See [Troubleshooting](docs/TROUBLESHOOTING_EN.md).
 
 </details>
 
