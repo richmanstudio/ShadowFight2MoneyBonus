@@ -49,7 +49,7 @@ python gui.py
 
 Use the language toggle in the upper-right corner to switch between Russian and English.
 
-## Новые настройки / New experimental options
+## Сферы и энергия / Orbs & Energy
 
 В окне редактора добавлен отдельный блок **«Сферы зачарования и энергия»**. В нём можно:
 
@@ -58,9 +58,9 @@ Use the language toggle in the upper-right corner to switch between Russian and 
 - включить **«Добавить бесконечную энергию / Add unlimited energy»** — это создаёт предмет `Unlimited_Energy` в сохранении;
 - сохранить новую копию `.imazingapp` с автоматическим пересчётом двух XML/HASH-пар.
 
-**Внимание:** новые опции пока **экспериментальные на iOS**; успешная проверка HASH гарантирует только согласованность файлов, а не принятие опций игрой. Не перезаписывайте свою резервную копию. Для первой пробы используйте небольшие значения сфер.
+**Статус:** владелец подтвердил работу сфер и энергии на своём iPhone. Это единичный результат, а не гарантия на всех устройствах. Проверка HASH подтверждает целостность файлов, но не универсальную совместимость. Не перезаписывайте резервную копию.
 
-**English:** In the GUI, choose one or more of **Green/Red/Purple orbs**, enter their values and tick the individual checkboxes. Enable **Add unlimited energy** to insert the `Unlimited_Energy` item. These additions are not yet validated in-game on iOS; always keep your original archive.
+**English:** In the GUI, choose one or more of **Green/Red/Purple orbs**, enter their values and tick the individual checkboxes. Enable **Add unlimited energy** to insert the `Unlimited_Energy` item. The project owner reports a successful in-game test on one iPhone. Other devices are not yet verified; always keep your original archive.
 
 ## Дизайн и технические детали
 
