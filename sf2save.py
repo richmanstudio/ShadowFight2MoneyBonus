@@ -243,7 +243,16 @@ def patch_xml(data, money=None, bonus=None, unlimited_energy=False, forge_materi
         raise SaveError('Expected exactly one active Warrior element.')
     modified = ((b'\xef\xbb\xbf' if data.startswith(b'\xef\xbb\xbf') else b'')
                 + modified_text.encode('utf-8'))
-    if ET.tostring(expected) != ET.tostring(parse_xml(modified)):
+    def without_formatting_whitespace(element):
+        # Inserting one Item changes indentation/tails, not saved gameplay data.
+        element = copy.deepcopy(element)
+        for node in element.iter():
+            if node.text is not None and not node.text.strip():
+                node.text = None
+            if node.tail is not None and not node.tail.strip():
+                node.tail = None
+        return ET.tostring(element)
+    if without_formatting_whitespace(expected) != without_formatting_whitespace(parse_xml(modified)):
         raise SaveError('Unexpected XML change; output refused.')
     return modified
 
