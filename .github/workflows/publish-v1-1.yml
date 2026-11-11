@@ -1,0 +1,83 @@
+name: Publish v1.1.0 (Windows GUI)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/publish-v1-1.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  tests:
+    name: Test - ${{ matrix.os }} / Python ${{ matrix.python-version }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python-version: ['3.10', '3.13']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Test save editor
+        run: python -m unittest discover -s tests -v
+      - name: Compile Python files
+        run: python -m py_compile sf2save.py gui.py
+      - name: Check Windows GUI import and localization
+        if: runner.os == 'Windows'
+        run: python -c "import gui; assert set(gui.STRINGS['ru']) == set(gui.STRINGS['en']); print('GUI import OK')"
+
+  build:
+    name: Package Windows executable
+    needs: tests
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install packager
+        run: python -m pip install --upgrade pyinstaller
+      - name: Build desktop editor
+        run: python -m PyInstaller --noconfirm --clean --onefile --windowed --name SF2-Save-Editor-Windows gui.py
+      - name: Verify executable exists and hash it
+        shell: pwsh
+        run: |
+          if (-not (Test-Path "dist/SF2-Save-Editor-Windows.exe")) { throw "Missing executable" }
+          Get-FileHash "dist/SF2-Save-Editor-Windows.exe" -Algorithm SHA256
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sf2-v1-1-windows
+          path: dist/SF2-Save-Editor-Windows.exe
+          if-no-files-found: error
+
+  release:
+    name: Publish v1.1.0
+    needs: [tests, build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: sf2-v1-1-windows
+          path: release-bin
+      - name: Publish release with executable
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          test -s release-bin/SF2-Save-Editor-Windows.exe
+          if gh release view v1.1.0 --repo "${{ github.repository }}" >/dev/null 2>&1; then
+            echo "Release v1.1.0 exists. Refusing to overwrite."
+            exit 1
+          fi
+          gh release create v1.1.0 release-bin/SF2-Save-Editor-Windows.exe \
+            --repo "${{ github.repository }}" \
+            --target "${{ github.sha }}" \
+            --title "ShadowFight2MoneyBonus v1.1.0 — Coins, Orbs & Energy" \
+            --notes-file RELEASE_NOTES_v1.1.0.md \
+            --latest
