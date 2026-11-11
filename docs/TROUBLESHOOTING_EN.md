@@ -30,7 +30,7 @@ The editor couldn't confirm the original save checksum using the information in 
 
 ## The orbs / Unlimited Energy option doesn't work
 
-These are **experimental features in v1.1.0-beta.1**. Their save-file editing and consistency checks are tested, but their actual in-game behavior on iOS is **not yet confirmed**. If the game has problems, restore your original backup. Coins and gems have a separate user-confirmed test.
+These features are included in **v1.1.0**. The owner reports that orb editing and unlimited energy worked on their iPhone, but compatibility with other iOS/game versions is unknown. If you have problems, restore your original backup. No cross-device guarantee is offered.
 
 ## The editor cannot open on Windows
 
