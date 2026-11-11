@@ -8,6 +8,7 @@
 </p>
 
 <h1 align="center">ShadowFight2MoneyBonus</h1>
+<p align="center"><a href="README.en.md"><strong>🇬🇧 English README / English guide</strong></a> · <a href="docs/GUI.md"><strong>🖥️ Windows GUI / Интерфейс</strong></a> · <a href="https://github.com/richmanstudio/ShadowFight2MoneyBonus/releases"><strong>📦 Releases</strong></a></p>
 <p align="center"><strong>Гайд по изменению монет и кристаллов в оригинальной Shadow Fight 2 на iOS<br>с сохранением своего действующего прогресса.</strong></p>
 
 <p align="center"><a href="#быстрый-старт">Быстрый старт</a> · <a href="docs/GUIDE.md">Полный гайд</a> · <a href="docs/HASH.md">Как устроен хеш</a> · <a href="docs/TROUBLESHOOTING.md">Решение ошибок</a></p>
@@ -35,6 +36,14 @@
 | Другие версии iOS, SF2, другие устройства | Не подтверждены; обязательна проверка исходного хеша |
 
 Это воспроизводимый опыт, а не обещание совместимости со всеми версиями. Подробнее: [границы проверки](docs/VALIDATION.md).
+
+## Графический интерфейс для Windows
+
+Для пользователей без опыта работы с терминалом есть **двуязычный GUI** (`gui.py`) на Python/Tkinter и самостоятельная Windows-сборка в [GitHub Releases](https://github.com/richmanstudio/ShadowFight2MoneyBonus/releases), если файл `SF2-Save-Editor-Windows.exe` опубликован в Assets.
+
+В программе выберите свой **нетронутый** `.imazingapp`, нажмите **«Проверить файл и HASH»**, укажите `Money`/`Bonus`, сохраните **новый** пакет и восстановите его через iMazing. Исходник не перезаписывается. Окно работает офлайн, а проверка хеша выполняется тем же модулем, что и CLI.
+
+Запуск из исходников: `python gui.py` (Python 3.10+ с Tkinter). **Полное руководство:** [docs/GUI.md](docs/GUI.md). **English:** [README.en.md](README.en.md).
 
 ## Быстрый старт
 
