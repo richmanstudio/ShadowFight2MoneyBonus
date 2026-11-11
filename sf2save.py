@@ -130,32 +130,119 @@ def currency_value(value):
         raise SaveError('Currency must contain 1 to 30 ASCII digits, without signs or separators.')
     return str(int(value))
 
-def patch_xml(data, money=None, bonus=None):
+def patch_xml(data, money=None, bonus=None, unlimited_energy=False, forge_materials=None):
+    """Edit only the active character, preserving lexical XML and existing save fields.
+
+    The Unlimited_Energy item and all three forge materials are research-based
+    additions. Their behavior has not yet been validated on every iOS release.
+    """
     before = parse_xml(data)
     warrior = active_warrior(before)
-    changes = {k: currency_value(v) for k, v in [('Money', money), ('Bonus', bonus)] if v is not None}
-    if not changes:
-        raise SaveError('Specify --money and/or --bonus.')
+    changes = {k: currency_value(v) for k, v in [('Money', money), ('Bonus', bonus)]
+               if v is not None}
+    allowed_materials = ('ForgeMaterial1', 'ForgeMaterial2', 'ForgeMaterial3')
+    requested_materials = forge_materials or {}
+    if set(requested_materials) - set(allowed_materials):
+        raise SaveError('Unknown forge material key.')
+    material_changes = {k: currency_value(str(v)) for k, v in requested_materials.items()
+                        if v is not None}
+    if not changes and not material_changes and not unlimited_energy:
+        raise SaveError('Specify currency, forge materials and/or --unlimited-energy.')
+
+    expected = copy.deepcopy(before)
+    expected_warrior = active_warrior(expected)
+    expected_warrior.attrib.update(changes)
+
+    if material_changes:
+        expected_currencies = expected_warrior.find('Currencies')
+        if expected_currencies is None:
+            raise SaveError('Currencies element is missing. Unlock enchantment materials in game first.')
+        expected_currencies.attrib.update(material_changes)
+
+    new_item = ('<Item Name="Unlimited_Energy" Equipped="0" Count="1" '
+                'UpgradeLevel="0" DeliveryTime="-1" DeliveryUpgradeLevel="-1" '
+                'AcquireType="Item" />')
+    if unlimited_energy:
+        expected_items = expected_warrior.find('Items')
+        if expected_items is None:
+            raise SaveError('Items element is missing.')
+        matching = [item for item in expected_items
+                    if item.tag == 'Item' and item.get('Name') == 'Unlimited_Energy']
+        if len(matching) > 1:
+            raise SaveError('Duplicate Unlimited_Energy items.')
+        if matching:
+            matching[0].set('Count', '1')
+        else:
+            expected_items.append(ET.fromstring(new_item))
+
     text = data.decode('utf-8-sig')
     count = 0
-    def replace(match):
+    def replace_warrior(match):
         nonlocal count
-        tag = match.group()
-        entry = ET.fromstring(tag[:-1] + '/>')
-        if entry.get('ID') != warrior.get('ID'):
-            return tag
+        section = match.group()
+        tag_match = re.match(r'<Warrior\b[^>]*>', section)
+        if tag_match is None:
+            raise SaveError('Warrior opening tag is missing.')
+        opening = tag_match.group()
+        parsed = ET.fromstring(opening[:-1] + '/>')
+        if parsed.get('ID') != warrior.get('ID'):
+            return section
         count += 1
+
         for key, value in changes.items():
-            tag, n = re.subn(r'\b' + key + r'="[^"]*"', key + '="' + value + '"', tag)
+            opening, n = re.subn(r'\b' + key + r'="[^"]*"', key + '="' + value + '"', opening)
             if n != 1:
                 raise SaveError('Unsupported or ambiguous attribute formatting: ' + key)
-        return tag
-    result = re.sub(r'<Warrior\b[^>]*>', replace, text)
+        section = opening + section[tag_match.end():]
+
+        if material_changes:
+            match_currencies = re.search(r'<Currencies\b[^>]*>', section)
+            if match_currencies is None:
+                raise SaveError('Currencies opening tag is missing.')
+            tag = match_currencies.group()
+            for key, value in material_changes.items():
+                pattern = r'\b' + key + r'="[^"]*"'
+                if re.search(pattern, tag):
+                    tag, n = re.subn(pattern, key + '="' + value + '"', tag)
+                    if n != 1:
+                        raise SaveError('Ambiguous forge material attribute: ' + key)
+                else:
+                    # Add an as-yet-unlocked material without changing other attributes.
+                    closing = re.search(r'\s*/?>$', tag)
+                    if closing is None:
+                        raise SaveError('Unsupported Currencies tag formatting.')
+                    tag = tag[:closing.start()] + ' ' + key + '="' + value + '"' + tag[closing.start():]
+            section = section[:match_currencies.start()] + tag + section[match_currencies.end():]
+
+        if unlimited_energy:
+            match_items = re.search(r'<Items\b[^>]*>.*?</Items>', section, re.DOTALL)
+            if match_items is None:
+                raise SaveError('Items section is missing or unsupported.')
+            block = match_items.group()
+            named_item = re.compile(r'<Item\b[^>]*\bName="Unlimited_Energy"[^>]*/>')
+            existing = list(named_item.finditer(block))
+            if len(existing) > 1:
+                raise SaveError('Duplicate Unlimited_Energy items.')
+            if existing:
+                item = existing[0].group()
+                if not re.search(r'\bCount="[^"]*"', item):
+                    raise SaveError('Existing Unlimited_Energy item lacks Count.')
+                item = re.sub(r'\bCount="[^"]*"', 'Count="1"', item)
+                block = block[:existing[0].start()] + item + block[existing[0].end():]
+            else:
+                indentation = re.search(r'(?m)^([ \t]*)<Item\b', block)
+                pad = indentation.group(1) if indentation else '  '
+                newline = '\r\n' if '\r\n' in block else '\n'
+                close = block.rfind('</Items>')
+                block = block[:close] + newline + pad + new_item + block[close:]
+            section = section[:match_items.start()] + block + section[match_items.end():]
+        return section
+
+    modified_text = re.sub(r'<Warrior\b[^>]*>.*?</Warrior>', replace_warrior, text, flags=re.DOTALL)
     if count != 1:
-        raise SaveError('Expected exactly one active Warrior opening tag.')
-    modified = (b'\xef\xbb\xbf' if data.startswith(b'\xef\xbb\xbf') else b'') + result.encode('utf-8')
-    expected = copy.deepcopy(before)
-    active_warrior(expected).attrib.update(changes)
+        raise SaveError('Expected exactly one active Warrior element.')
+    modified = ((b'\xef\xbb\xbf' if data.startswith(b'\xef\xbb\xbf') else b'')
+                + modified_text.encode('utf-8'))
     if ET.tostring(expected) != ET.tostring(parse_xml(modified)):
         raise SaveError('Unexpected XML change; output refused.')
     return modified
@@ -166,6 +253,13 @@ def inspect_archive(path, verify=False, device=None):
         raw = z.read(base + 'users.xml')
         warrior = active_warrior(parse_xml(raw))
         result = {k: warrior.get(k) for k in ['Money', 'Bonus', 'Level', 'Experience', 'CurrentZone', 'DenominationDigits']}
+        currencies = warrior.find('Currencies')
+        for key in ('ForgeMaterial1', 'ForgeMaterial2', 'ForgeMaterial3'):
+            result[key] = currencies.get(key) if currencies is not None else None
+        items = warrior.find('Items')
+        result['Unlimited_Energy'] = bool(items is not None and any(
+            item.tag == 'Item' and item.get('Name') == 'Unlimited_Energy'
+            and item.get('Count') != '0' for item in items))
         result['xml_sha256'] = hashlib.sha256(raw).hexdigest()
         if verify:
             if z.testzip() is not None:
@@ -180,7 +274,8 @@ def inspect_archive(path, verify=False, device=None):
                                                    and z.read(backup + '.hash') == expected)
         return result
 
-def patch_archive(source, output, money=None, bonus=None, device=None):
+def patch_archive(source, output, money=None, bonus=None, device=None,
+                  unlimited_energy=False, forge_materials=None):
     source, output = Path(source), Path(output)
     if source.resolve() == output.resolve() or output.exists():
         raise SaveError('Choose a NEW output filename; source/existing files are never overwritten.')
@@ -192,7 +287,8 @@ def patch_archive(source, output, money=None, bonus=None, device=None):
             raise SaveError('Source archive CRC check failed.')
         found = verified_device(z, prefix, base, device)
         raw = z.read(base + 'users.xml')
-        modified = patch_xml(raw, money, bonus)
+        modified = patch_xml(raw, money, bonus, unlimited_energy=unlimited_energy,
+                             forge_materials=forge_materials)
         digest = save_hash(modified, found)
         changes = {base + name: modified for name in ['users.xml', 'users_backup.xml']}
         changes.update({base + name: digest for name in ['users.xml.hash', 'users_backup.xml.hash']})
@@ -238,6 +334,11 @@ def main(argv=None):
             p.add_argument('--output', type=Path, required=True)
             p.add_argument('--money')
             p.add_argument('--bonus')
+            p.add_argument('--orb-green', help='Green enchantment orbs (ForgeMaterial1).')
+            p.add_argument('--orb-red', help='Red enchantment orbs (ForgeMaterial2).')
+            p.add_argument('--orb-purple', help='Purple enchantment orbs (ForgeMaterial3).')
+            p.add_argument('--unlimited-energy', action='store_true',
+                           help='Insert the research-based Unlimited_Energy item.')
     args = parser.parse_args(argv)
     try:
         if args.command == 'patch':
