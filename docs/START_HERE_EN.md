@@ -1,6 +1,6 @@
 # Beginner's guide — Shadow Fight 2 on iPhone
 
-[← Home](../README.en.md) · [Русская инструкция](START_HERE.md) · [Troubleshooting](TROUBLESHOOTING.md)
+[← Home](../README.en.md) · [Русская инструкция](START_HERE.md) · [Troubleshooting](TROUBLESHOOTING_EN.md)
 
 **Want to change coins or gems in your own Shadow Fight 2 save, without writing code?** Follow these steps.
 
@@ -78,7 +78,7 @@ Now check your coins, gems, level, equipment and map.
 
 ## Common questions
 
-**“Your game data may be corrupted”** — Don't delete the original. The save or hash may not match, or there may be a version-specific issue. [Troubleshooting](TROUBLESHOOTING.md).
+**“Your game data may be corrupted”** — Don't delete the original. The save or hash may not match, or there may be a version-specific issue. [Troubleshooting](TROUBLESHOOTING_EN.md).
 
 **My balance changed back** — Make sure you imported the new file, and check whether cloud progress was offered or selected.
 
