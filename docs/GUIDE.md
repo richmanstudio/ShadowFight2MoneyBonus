@@ -101,6 +101,28 @@ python sf2save.py patch "D:\SF2\original.imazingapp" --output "D:\SF2\bonus-only
 python sf2save.py verify "D:\SF2\modified.imazingapp"
 ```
 
+## 6A. Дополнительно: три сферы зачарования и бесконечная энергия
+
+**Экспериментальная функция:** эти изменения пока не подтверждены запуском на iOS, в отличие от проверенного изменения обычной валюты. Для проверки используйте отдельную резервную копию.
+
+- `ForgeMaterial1` — зелёные сферы;
+- `ForgeMaterial2` — красные сферы;
+- `ForgeMaterial3` — фиолетовые сферы.
+
+Сферы хранятся в `Warrior/Currencies`. Если третьего атрибута ещё нет, инструмент добавляет `ForgeMaterial3` в существующий тег, не затрагивая остальные поля. Если сам тег `Currencies` отсутствует, инструмент выдаст ошибку — сначала откройте зачарование в игре.
+
+```powershell
+python sf2save.py patch "D:\SF2\original.imazingapp" --output "D:\SF2\orbs.imazingapp" --orb-green 100000 --orb-red 50000 --orb-purple 10000
+```
+
+Для бесконечной энергии:
+
+```powershell
+python sf2save.py patch "D:\SF2\original.imazingapp" --output "D:\SF2\energy.imazingapp" --unlimited-energy
+```
+
+В список `Warrior/Items` добавляется один предмет `Unlimited_Energy`. Если он уже есть, количество переводится в `1` без создания второго предмета. Энергию, сферы, монеты и кристаллы можно изменить **одной** командой, указав все нужные флаги. После сборки запустите `verify` для нового файла. Сохраните исходное сохранение; корректный хеш не доказывает работу дополнительных опций внутри игры.
+
 ## 7. Импорт на тот же iPhone
 
 Закройте игру. В iMazing выберите **Manage Apps → Device → Restore App Data**, затем `modified.imazingapp`. Перед финальным действием убедитесь, что выбран ваш iPhone и именно новый файл.
