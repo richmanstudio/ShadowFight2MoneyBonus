@@ -17,6 +17,7 @@ First public release of the offline **Shadow Fight 2 iOS save editor**, with a W
 3. Select the original `.imazingapp` and click **Verify archive and HASH**.
 4. Choose the new coin/gem amounts and a **new output filename**.
 5. Click **Build .imazingapp** and import the result with iMazing's **Restore App Data**.
+6. **Only for the first launch after each import:** turn on Airplane Mode and separately turn Wi-Fi off. Start SF2 offline, **complete one battle or buy an ordinary item with in-game currency**, fully close the game, and then reconnect. Normal later launches do not require Airplane Mode. This is the project owner's reported successful procedure on one device, not a universal cloud-sync guarantee.
 
 Windows may display an unknown-publisher warning because this open-source executable is not code-signed. Download only from this repository. You can review the source or run `python gui.py` instead.
 
