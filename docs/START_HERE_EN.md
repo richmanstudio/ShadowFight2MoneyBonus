@@ -22,8 +22,8 @@ iMazing is a separate product. Export/restore features **may require a paid lice
 
 Choose a version:
 
-- **[Stable v1.0.0 — coins and gems](https://github.com/richmanstudio/ShadowFight2MoneyBonus/releases/tag/v1.0.0)**: user-confirmed on a specific SF2 and iOS version.
-- **[Test v1.1.0-beta.1 — also orbs and unlimited energy](https://github.com/richmanstudio/ShadowFight2MoneyBonus/releases/tag/v1.1.0-beta.1)**: the new features are **experimental**, not yet verified in the iOS game.
+- **[Current v1.1.0 — coins, gems, all three orbs & unlimited energy](https://github.com/richmanstudio/ShadowFight2MoneyBonus/releases/tag/v1.1.0)**: all features have been reported working by the owner on one iPhone.
+- **[Older v1.0.0 — coins & gems only](https://github.com/richmanstudio/ShadowFight2MoneyBonus/releases/tag/v1.0.0)**.
 
 On the release page, find **Assets** and download **`SF2-Save-Editor-Windows.exe`**. You open this on **Windows**, not your phone.
 
@@ -48,7 +48,7 @@ Menu wording can differ between iMazing versions. See the [official iMazing walk
 2. Click **Browse** and select the untouched **`original.imazingapp`**.
 3. Click **Verify archive and HASH**. In simple terms, this checks that your original save is intact and recognizable. If verification **fails, stop**.
 4. Enter the desired **Coins (Money)** and/or **Gems (Bonus)**, ticking only the values you want to change.
-5. The **beta** also offers green, red and purple enchantment orbs, plus **Add unlimited energy**. These are **not yet confirmed in the iOS game**. For a first try, start with coins/gems only.
+5. **v1.1.0** also offers green, red and purple enchantment orbs, plus **Add unlimited energy**. The owner reports these worked on their iPhone, but other devices and versions have not been verified.
 6. Click **Save as**, select a **new filename** such as **`modified.imazingapp`**, then **Build .imazingapp**.
 
 You now have two files: the original safe backup and the newly modified copy.
@@ -86,7 +86,7 @@ Now check your coins, gems, level, equipment and map.
 
 **Does iMazing cost money?** — Some features may require a license; check iMazing's current terms.
 
-**Are orbs and infinite energy guaranteed?** — No. Those are experimental options in the beta release.
+**Do orbs and unlimited energy work?** — The owner reports success on one iPhone. Other phones and versions are not guaranteed. Keep a full backup.
 
 **How do I report a bug?** — Use [GitHub Issues](https://github.com/richmanstudio/ShadowFight2MoneyBonus/issues). Include the game, iOS and iMazing versions and an error message, **not your personal `.imazingapp`, XML, plist, device IDs or passwords**.
 
