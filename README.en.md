@@ -13,6 +13,7 @@ This project edits your **existing local app-data export** rather than providing
 - Read an exported `.imazingapp` archive.
 - Verify the original `users.xml.hash` using the matching value found in the archive's local app preferences.
 - Change the active character's `Money` (coins) and/or `Bonus` (gems).
+- **Experimental:** Edit three types of enchantment orbs and add an unlimited-energy item.
 - Update both `users.xml` and `users_backup.xml` with matching `.hash` files.
 - Verify the new archive, while preserving all other files in the archive.
 - Offer a **Windows graphical interface** (`gui.py`) or a Python command-line interface (`sf2save.py`).
@@ -45,7 +46,7 @@ It does not unlock paid content, impersonate purchases, or modify server-owned r
 2. With Python installed, launch `python gui.py` from the repository folder. For the standalone build, open the released `.exe`.
 3. In iMazing, use **Manage Apps → Device → Shadow Fight 2 → Back Up / Export App Data**. Save a fresh `original.imazingapp` from your iPhone.
 4. In the GUI, select that **untouched** `.imazingapp` file and press **Verify archive and HASH**. If verification fails, **stop**. Do not use an edited file as your supposed original.
-5. Select the currencies you want to change and enter the desired numbers.
+5. Select the currencies you want to change and enter the desired numbers. Optionally edit green/red/purple orbs and enable the experimental **Unlimited Energy** option.
 6. Choose a **different** output filename, such as `modified.imazingapp`. Click **Build .imazingapp**.
 7. Only after successful output verification, close the game on your iPhone and use iMazing's **Restore App Data** feature to import the new archive. Follow the iOS recovery/setup screens. **Before opening the game — and on every subsequent launch — enable Airplane Mode and turn Wi-Fi off.** Confirm that the level, inventory and currency are correct while offline.
 
@@ -84,6 +85,26 @@ python sf2save.py verify "D:\SF2\modified.imazingapp"
 ```
 
 The values above are **examples**, not tested maximums. You can omit `--money` or `--bonus` if you want to change only one currency. On Windows, `py` may be used instead of `python`.
+
+## Experimental: enchantment orbs and Unlimited Energy
+
+In the game's `users.xml`, forge materials are stored under the active character's `Currencies` element:
+
+| Material field | In-game resource |
+|---|---|
+| `ForgeMaterial1` | Green enchantment orbs |
+| `ForgeMaterial2` | Red enchantment orbs |
+| `ForgeMaterial3` | Purple enchantment orbs |
+
+`ForgeMaterial3` may be absent from some saves. The editor can add it to an **existing** `Currencies` element. For unlimited energy, it adds a single `Unlimited_Energy` item under the character's `Items`; repeat runs will not duplicate it.
+
+**CLI example:**
+
+```powershell
+python sf2save.py patch "D:\SF2\original.imazingapp" --output "D:\SF2\custom.imazingapp" --orb-green 100000 --orb-red 50000 --orb-purple 10000 --unlimited-energy
+```
+
+> **Validation notice:** The field names and item name are supported by publicly documented save examples. However, their **in-game behavior on iOS has not yet been verified**. Automated tests confirm XML structure, hashes, and archive preservation — not an unlocked feature in the game. Keep your original save and a full phone backup, test conservative values first, and keep the modified game offline before every launch as described above.
 
 ## How is the hash calculated?
 
